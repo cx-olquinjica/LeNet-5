@@ -50,7 +50,7 @@ class AlexNet(BaseModel):
                 nn.ReLU(inplace=True),
                 nn.MaxPool2d(kernel_size=3, stride=2),
         )
-        self.avgpool = nn.AdaptiveAvgPool2d((4, 4))
+        self.avgpool = nn.AdaptiveAvgPool2d((6, 6))
 
         self.classifier = nn.Sequential(
                 nn.Dropout(0.5),
