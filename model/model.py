@@ -36,7 +36,7 @@ class AlexNet(BaseModel):
         super().__init__()
 
         self.features = nn.Sequential(
-                nn.Conv2d(in_channels=1, out_channels=96, kernel_size=11, stride=4, padding=2),
+                nn.Conv2d(in_channels=1, out_channels=96, kernel_size=5, stride=1, padding=2),
                 nn.ReLU(inplace=True),
                 nn.MaxPool2d(kernel_size=3, stride=2),
                 nn.Conv2d(96, 256, kernel_size=5, padding=2),
@@ -54,7 +54,7 @@ class AlexNet(BaseModel):
 
         self.classifier = nn.Sequential(
                 nn.Dropout(0.5),
-                nn.Linear(250 * 6 * 6, 4096),
+                nn.Linear(256 * 6 * 6, 4096),
                 nn.ReLU(inplace=True),
                 nn.Dropout(0.5),
                 nn.Linear(4096, 4096),
