@@ -121,11 +121,12 @@ def vgg_block(in_channels, out_channels, num_convs):
         # other implementation add BatchNorm2d here, think about that later.
         #layers.append(nn.BatchNorm2d(out_channels))
         layers.append(nn.ReLU(inplace=True))
+        in_channels = out_channels
     layers.append(nn.MaxPool2d(kernel_size=2, stride=2))
     return nn.Sequential(*layers)
 
 class VGG(BaseModel):
-    def __init__(self, arch, num_classes):
+    def __init__(self,num_classes=10):
         super().__init__()
         
         self.features = nn.Sequential(
