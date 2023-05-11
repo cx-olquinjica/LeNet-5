@@ -156,3 +156,30 @@ class VGG(BaseModel):
         x = x.view(x.size(0), -1)
         x = self.classifier(x)
         return F.log_softmax(x, dim=1)
+
+
+# defining an NiN block 
+
+def nin_block(in_channels, out_channels, kernel_size, stride, padding):
+    return nn.Sequential(
+            nn.Conv2d(in_channels, out_channels, kernel_size, stride, padding), nn.ReLU(inplace=True),
+            nn.Convd2(in_channels, out_channels, kernel_size, stride, padding), nn.ReLU(inplace=True),
+            nn.Convd2(in_channels, out_channels, kernel_size, stride, padding), nn.ReLU(inplace=True)
+            )
+
+class NiN(BaseModel): 
+    def __init__(self, num_classes): 
+        super().__init__()
+        self.net = nn.Sequential(
+                nin_block(in_channels=, out_channels=, kernel_size=5, stride=4, padding=0), 
+                nn.MaxPool2d(kernel_size=, stride=2), 
+                nin_block(in_channels=, out_channels=, kernel_size=3, stride=1, padding=1), 
+                nn.MaxPool2d(kernel_size=, stride=2), 
+                nin_block(in_channels=, out_channels=, kernel_size=3, stride=1, padding=1), 
+                nn.MaxPool2d(kernel_size=, stride=2), 
+                nn.Dropout(0.5), 
+                nin_block(in_channels=, num_classes, kernel_size=3, stride, padding=1), 
+                nn.AdaptiveAvgPool2d((1, 1)), 
+                nn.Flatten(inplace=True))
+
+
