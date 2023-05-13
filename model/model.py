@@ -36,7 +36,7 @@ class AlexNet(BaseModel):
         super().__init__()
 
         self.features = nn.Sequential(
-                nn.Conv2d(in_channels=1, out_channels=96, kernel_size=11, stride=4, padding=2),
+                nn.Conv2d(in_channels=1, out_channels=96, kernel_size=5, stride=1, padding=2),
                 nn.ReLU(inplace=True),
                 nn.MaxPool2d(kernel_size=3, stride=2),
                 nn.Conv2d(96, 256, kernel_size=5, padding=2),
@@ -50,11 +50,11 @@ class AlexNet(BaseModel):
                 nn.ReLU(inplace=True),
                 nn.MaxPool2d(kernel_size=3, stride=2),
         )
-        self.avgpool = nn.AdaptiveAvgPool2d((4, 4))
+        self.avgpool = nn.AdaptiveAvgPool2d((6, 6))
 
         self.classifier = nn.Sequential(
                 nn.Dropout(0.5),
-                nn.Linear(250 * 6 * 6, 4096),
+                nn.Linear(256 * 6 * 6, 4096),
                 nn.ReLU(inplace=True),
                 nn.Dropout(0.5),
                 nn.Linear(4096, 4096),
@@ -70,4 +70,116 @@ class AlexNet(BaseModel):
         x = x.view(x.size(0),-1 )
         x = self.classifier(x)
         return F.log_softmax(x, dim=1)
+
+
+class AlexNetMNIST(BaseModel):
+    def __init__(self, num_classes=10):
+        super().__init__()
+
+        self.features = nn.Sequential(
+                nn.Conv2d(in_channels=1, out_channels=96, kernel_size=5, stride=1, padding=2),
+                nn.ReLU(inplace=True),
+                nn.MaxPool2d(kernel_size=3, stride=2),
+                nn.Conv2d(96, 256, kernel_size=5, padding=2),
+                nn.ReLU(inplace=True),
+                nn.MaxPool2d(kernel_size=3, stride=2),
+                nn.Conv2d(256, 384, kernel_size=3, padding=1),
+                nn.ReLU(inplace=True),
+                nn.Conv2d(384, 384, kernel_size=3, padding=1),
+                nn.ReLU(inplace=True),
+                nn.Conv2d(384, 256, kernel_size=3, padding=1),
+                nn.ReLU(inplace=True),
+                nn.MaxPool2d(kernel_size=3, stride=2),
+        )
+        self.avgpool = nn.AdaptiveAvgPool2d((6, 6))
+
+        self.classifier = nn.Sequential(
+                nn.Dropout(0.5),
+                nn.Linear(256 * 6 * 6, 4096),
+                nn.ReLU(inplace=True),
+                nn.Dropout(0.5),
+                nn.Linear(4096, 4096),
+                nn.ReLU(inplace=True),
+                nn.Linear(4096, num_classes),
+        )
+
+
+
+    def forward(self, x):
+        x = self.features(x)
+        x = self.avgpool(x)
+        x = x.view(x.size(0),-1 )
+        x = self.classifier(x)
+        return F.log_softmax(x, dim=1)
+
+# defining a vgg block
+
+def vgg_block(in_channels, out_channels, num_convs):
+    layers = []
+    for _ in range(num_convs):
+        layers.append(nn.Conv2d(in_channels, out_channels, kernel_size=3, padding=1))
+        # other implementation add BatchNorm2d here, think about that later.
+        #layers.append(nn.BatchNorm2d(out_channels))
+        layers.append(nn.ReLU(inplace=True))
+        in_channels = out_channels
+    layers.append(nn.MaxPool2d(kernel_size=2, stride=2))
+    return nn.Sequential(*layers)
+
+class VGG(BaseModel):
+    def __init__(self,num_classes=10):
+        super().__init__()
+        
+        self.features = nn.Sequential(
+                vgg_block(3, 64, 2), 
+                vgg_block(64, 128, 2), 
+                vgg_block(128, 256, 3), 
+                vgg_block(256, 512, 3), 
+                vgg_block(512, 512, 3)
+            )
+        
+        self.avgpool = nn.AdaptiveAvgPool2d((7, 7))
+
+        self.classifier = nn.Sequential(
+                nn.Linear(512 * 7 * 7, 4096), 
+                nn.ReLU(inplace=True), 
+                nn.Dropout(), 
+                nn.Linear(4096, 4096), 
+                nn.ReLU(inplace=True), 
+                nn.Dropout(), 
+                nn.Linear(4096, num_classes), 
+            )
+
+
+    def forward(self, x):
+        x = self.features(x)
+        x = self.avgpool(x)
+        x = x.view(x.size(0), -1)
+        x = self.classifier(x)
+        return F.log_softmax(x, dim=1)
+
+
+# defining an NiN block 
+
+def nin_block(in_channels, out_channels, kernel_size, stride, padding):
+    return nn.Sequential(
+            nn.Conv2d(in_channels, out_channels, kernel_size, stride, padding), nn.ReLU(inplace=True),
+            nn.Convd2(in_channels, out_channels, kernel_size, stride, padding), nn.ReLU(inplace=True),
+            nn.Convd2(in_channels, out_channels, kernel_size, stride, padding), nn.ReLU(inplace=True)
+            )
+
+class NiN(BaseModel): 
+    def __init__(self, num_classes): 
+        super().__init__()
+        self.net = nn.Sequential(
+                nin_block(in_channels=, out_channels=, kernel_size=5, stride=4, padding=0), 
+                nn.MaxPool2d(kernel_size=, stride=2), 
+                nin_block(in_channels=, out_channels=, kernel_size=3, stride=1, padding=1), 
+                nn.MaxPool2d(kernel_size=, stride=2), 
+                nin_block(in_channels=, out_channels=, kernel_size=3, stride=1, padding=1), 
+                nn.MaxPool2d(kernel_size=, stride=2), 
+                nn.Dropout(0.5), 
+                nin_block(in_channels=, num_classes, kernel_size=3, stride, padding=1), 
+                nn.AdaptiveAvgPool2d((1, 1)), 
+                nn.Flatten(inplace=True))
+
 
