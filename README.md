@@ -39,12 +39,12 @@ To replicate and experiment with the results, follow the steps outlined below:
  1. Clone this repository:
 
 ```
-git clone https://github.com/your-username/lenet5-cifar10.git
+git clone git@github.com:cx-olquinjica/LeNet-5.git 
 ```
 
  2. Install the necessary dependencies. It is recommended to use a virtual environment:
 ```
-cd lenet5-cifar10
+cd LeNet-5 
 python3 -m venv env
 source env/bin/activate
 pip install -r requirements.txt
@@ -58,7 +58,7 @@ python train.py
  4. Experiment with different hyperparameters, regularization techniques, optimization algorithms, and weight initialization strategies by modifying the provided configuration files.
  5. Evaluate the trained model on the test set:
 ```
-python evaluate.py
+python test.py
 ```
 
 
@@ -78,7 +78,7 @@ Contributions to this repository are welcome. If you have any suggestions, bug f
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for more information.
+This project is licensed under the MIT License. See the [LICENSE](fhhfoh) file for more information.
 
 ## Acknowledgments
 
