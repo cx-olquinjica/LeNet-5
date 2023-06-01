@@ -66,9 +66,9 @@ python test.py
 
 The repository documents the results obtained from different experiments. We compare the original LeNet-5 model’s performance with the modified models that incorporate various deep learning techniques. The impact on accuracy, convergence speed, and generalization ability will be analyzed and presented in the repository.
 
-| Model | Activation | Regularization| Initialization| Optimization| # Epoch| Loss| Accuracy|  Val Loss| Val Accuracy| 
+| Early Stopping (Yes/No) | Activation | Regularization| Initialization| Optimization| # Epoch| Loss| Accuracy|  Val Loss| Val Accuracy| 
 | ----             | --------- | ---- | ----- | ---- | ---- | ---     | --------- |   ----- | --------- | 
-|LeNet-5 | Sigmoid | Weight Decay = | Xavier Initialization  | Adam |28 | 0.00755   | 0.9768 |0.002   |  0.9995     |
+|Yes = 10| Sigmoid | Weight Decay = | Xavier Initialization  | Adam |28 | 0.00755   | 0.9768 |0.002   |  0.9995     |
 | claude-v1.3      | ?         | RLHF | 81.8* | -    | 74.8*| 67.3*   | -         |   54.2* | 24.9      |
 | PaLM-2           | ?         | Base | 80.7  | 34.3 | 78.3 | 78.1    | -         |   -     | 31.8      |
 | gpt-3.5-turbo    | ?         | RLHF | 74.9* | -    | 67.3*| 70.1*   | 48.1      |   54.4* | 30.2      |
