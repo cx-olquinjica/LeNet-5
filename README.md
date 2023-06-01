@@ -1,16 +1,16 @@
 # LeNet-5
 
-This repository showcases the impact of modern deep learning techniques on the original results reported by the LeNet-5 model, using the CIFAR-10 dataset. By exploring techniques such as regularization, optimization, and initialization,I aim to improve the model’s performance and accuracy on this challenging dataset.
+This repository showcases the impact of modern deep learning techniques on the original results reported by the LeNet-5 model, using the MNIST dataset. By exploring techniques such as regularization, optimization, and initialization,I aim to improve the model’s performance and accuracy on this challenging dataset.
 
 ## Introduction
 
-LeNet-5 is a classic convolutional neural network (CNN) architecture developed by Yann LeCun et al. It was originally designed for recognizing handwritten digits in the MNIST dataset. In this project,I adapt the LeNet-5 model to work with the CIFAR-10 dataset, which consists of 60,000 32x32 color images across 10 classes.
+LeNet-5 is a classic convolutional neural network (CNN) architecture developed by Yann LeCun et al. It was originally designed for recognizing handwritten digits in the MNIST dataset. 
 
-The primary goal of this repository is to demonstrate how applying modern deep learning techniques can influence the performance of the LeNet-5 model on the more complex CIFAR-10 dataset.
+The primary goal of this repository is to demonstrate how applying modern deep learning techniques can influence the performance of the LeNet-5 model on the MNIST dataset.
 
 ## Dataset
 
-The CIFAR-10 dataset is widely used for image classification tasks. It comprises 50,000 training images and 10,000 test images, with each image belonging to one of the ten classes: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, and truck.
+The MNIST dataset is widely used for image classification tasks. It comprises 50,000 training images and 10,000 test images, with each image belonging to one of the ten classes: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, and truck.
 
 ## Model Architecture
 
@@ -50,9 +50,9 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
- 3. Run the training script to train the LeNet-5 model on CIFAR-10:
+ 3. Run the training script to train the LeNet-5 model on MNIST:
 ```
-python train.py
+python train.py -c config.json
 ```
 
  4. Experiment with different hyperparameters, regularization techniques, optimization algorithms, and weight initialization strategies by modifying the provided configuration files.
@@ -66,31 +66,15 @@ python test.py
 
 The repository documents the results obtained from different experiments. We compare the original LeNet-5 model’s performance with the modified models that incorporate various deep learning techniques. The impact on accuracy, convergence speed, and generalization ability will be analyzed and presented in the repository.
 
-| Early Stopping (Yes/No) | Activation | Regularization| Initialization| Optimization| # Epoch| Loss| Accuracy|  Val Loss| Val Accuracy| 
-| ----             | --------- | ---- | ----- | ---- | ---- | ---     | --------- |   ----- | --------- | 
-|Yes = 10| Sigmoid | Weight Decay = | Xavier Initialization  | Adam |28 | 0.00755   | 0.9768 |0.002   |  0.9995     |
-| claude-v1.3      | ?         | RLHF | 81.8* | -    | 74.8*| 67.3*   | -         |   54.2* | 24.9      |
-| PaLM-2           | ?         | Base | 80.7  | 34.3 | 78.3 | 78.1    | -         |   -     | 31.8      |
-| gpt-3.5-turbo    | ?         | RLHF | 74.9* | -    | 67.3*| 70.1*   | 48.1      |   54.4* | 30.2      |
-| claude-instant   | ?         | RLHF | 70.8* | -    | -    | 66.9*   | -         |   45.9* | 23.6      |
-| text-davinci-003 | ?         | RLHF | -     | -    | 64.6 | 70.7    | -         |   -     | 22.8      |
-| code-davinci-002 | ?         | Base | 66.6  | 19.1 | 64.5 | 73.7    | 47.0      |   -     | -         |
-| text-davinci-002 | ?         | SIFT | 55.4  | -    | 60.0 | 67.2    | -         |   -     | 16.6      |
-| Minerva          | 540B      | SIFT | 58.8  | 33.6 | -    | -       | -         |   -     | -         |
-| Flan-PaLM        | 540B      | SIFT | -     | -    | 70.9 | 66.3    | -         |   -     | -         |
-| Flan-U-PaLM      | 540B      | SIFT | -     | -    | 69.8 | 64.9    | -         |   -     | -         |
-| PaLM             | 540B      | Base | 56.9  | 8.8  | 62.9 | 62.0    | 26.2      |   -     | -         |
-| LLaMA            | 65B       | Base | 50.9  | 10.6 | 63.4 | -       | 23.7      |   38.8* | -         |
-| PaLM             | 64B       | Base | 52.4  | 4.4  | 49.0 | 42.3    | -         |   -     | -         |
-| LLaMA            | 33B       | Base | 35.6  | 7.1  | 57.8 | -       | 21.7      |   -     | -         |
-| InstructCodeT5+  | 16B       | SIFT | -     | -    | -    | -       | 35.0      |   -     | 11.6      |
-| StarCoder        | 15B       | Base | 8.4   | 15.1 | 33.9 | -       | 33.6      |   -     | 12.2      |
-| Vicuna           | 13B       | SIFT | -     | -    | -    | -       | -         |   -     | 12.9      |
-| LLaMA            | 13B       | Base | 17.8  | 3.9  | 46.9 | -       | 15.8      |   -     | -         |
-| Flan-T5          | 11B       | SIFT | 16.1* | -    | 48.6 | 41.4    | -         |   -     | -         |
-| Alpaca           | 7B        | SIFT | -     | -    | -    | -       | -         |   -     | 13.5      |
-| LLaMA            | 7B        | Base | 11.0  | 2.9  | 35.1 | -       | 10.5      |   -     | -         |
-| Flan-T5          | 3B        | SIFT | 13.5* | -    | 45.5 | 35.2    |    -      |   -     | -         |
+| Early Stopping (Yes/No) | Activation | Weight Decay| Initialization        | Optimization| # Epoch| Loss    | Accuracy  |  Val Loss| Val Accuracy| 
+| ----                    | ---------  | ----        | -----                 | ----        | ----   | ---     | --------- |   -----  | ---------   | 
+|Yes = 10                 | Sigmoid    | 0           | Xavier Initialization | Adam        | 72     | 0.00521 | 0.99927   | 0.04306  |  0.98715    |
+|No                       |Sigmoid     | 0           | Xavier Initialization | Adam        | 100    | 0.00462 | 0.99951   | 0.04354  |  0.99897    |
+|Yes                      |Sigmoid     | 0.001       | Xavier Initialization | Adam        | 63     | 0.12602 | 0.96969   | 0.11491  |  0.97212    |
+|Yes                      |ReLU        | 0           | Xavier Initialization | Adam        | 28     | 0.00314 | 0.99898   | 0.04902  |  0.98919    |
+|Yes                      |ReLU        | 0.001       | Xavier Initialization | Adam        | 36     | 0.02145 | 0.99361   | 0.03944  |  0.99950    |
+|No                       |ReLU        | 0           | Xavier Initialization | Adam        | 100    | 6.02913257830038e-05| 1.0  | 0.05802       | 0.98986|
+
 ## Documentation
 
 The repository includes detailed documentation on the experiments conducted and their corresponding results. Each experiment is clearly described, including the specific technique applied (regularization, optimization, or initialization), the hyperparameters used, and any modifications made to the LeNet-5 architecture.
