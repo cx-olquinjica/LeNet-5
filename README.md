@@ -75,6 +75,11 @@ The repository documents the results obtained from different experiments. We com
 |Yes                      |ReLU        | 0.001       | Xavier Initialization | Adam        | 36     | 0.02145 | 0.99361   | 0.03944  |  0.99950    |
 |No                       |ReLU        | 0           | Xavier Initialization | Adam        | 100    | 6.02913257830038e-05| 1.0  | 0.05802       | 0.98986|
 
+### Replacing Average Pooling by MaxPooling: 
+| Early Stopping | Activation |  Weight Decay | Initialization        | Optimization | # Epochs | Loss  | Accuracy | Val Loss | Val Accuracy  | 
+|  -------       |   ---------|     --------- |  --------------       |  ------------|   -------|----   | -------  |  --------|   ------------|
+| Yes            |  ReLU      |   0           |  Xavier Initialization|   Adam       |  20      |0.00580|  0.997908| 0.05595  |0.98912        | 
+
 ## Documentation
 
 The repository includes detailed documentation on the experiments conducted and their corresponding results. Each experiment is clearly described, including the specific technique applied (regularization, optimization, or initialization), the hyperparameters used, and any modifications made to the LeNet-5 architecture.
