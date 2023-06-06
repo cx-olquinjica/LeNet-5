@@ -80,6 +80,10 @@ The repository documents the results obtained from different experiments. We com
 |  -------       |   ---------|     --------- |  --------------       |  ------------|   -------|----   | -------  |  --------|   ------------|
 | Yes            |  ReLU      |   0           |  Xavier Initialization|   Adam       |  20      |0.00580|  0.997908| 0.05595  |0.98912        | 
 
+### Graph
+Applied on FASHION-MNIST Dataset, lr=0.1. The images below show a Sigmoid-AvgPool vs ReLU-MaxPool Experiment on  FASHION-MNIST Dataset:
+![Sigmoid-AvgPool](sigmoid-avg.png)   ![ReLU-MaxPool](relu-max.png)
+
 ## Documentation
 
 The repository includes detailed documentation on the experiments conducted and their corresponding results. Each experiment is clearly described, including the specific technique applied (regularization, optimization, or initialization), the hyperparameters used, and any modifications made to the LeNet-5 architecture.
